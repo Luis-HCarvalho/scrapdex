@@ -61,36 +61,20 @@ class Scrapdex(scrapy.Spider):
         }
 
     def _evolution_chart(self, response, pokemon_number):
-        # path = "#main  div.infocard-list-evo div.infocard span.infocard-lg-data"
-        evolists = response.css("#main  > div.infocard-list-evo")
-        print()
-        print()
-        print(dir(evolists))
-        print()
-        print(evolists.extract())
-        e = "#main  div.infocard-list-evo"
-
-        list_evo = "div.infocard-list-evo"
-        evo_split = "span.infocard-evo-split"
-        p1 = "#main  div.infocard-list-evo > div.infocard"
-        p2 = "#main  div.infocard-list-evo > span.infocard-evo-split"
-        p3 = "#main  div.infocard-list-evo" # get how many
-
-        initial = f"#main > {list_evo} > div.infocard:first-child"
-
+        # list_evo = "div.infocard-list-evo"
+        # initial = f"#main > {list_evo} > div.infocard:first-child"
         evo_lists = len(response.css("#main  div.infocard-list-evo").getall())
         evo_splits = len(response.css("#main div.infocard-list-evo span.infocard-evo-split").getall())
         path_all = "#main div.infocard-list-evo div.infocard span.infocard-lg-data"
 
-        chain = []
         next_evos = []
 
+        numbers = response.css(f"{path_all} small:first-child::text").getall()
+        names = response.css(f"{path_all} a.ent-name::text").getall()
+        urls = response.css(f"{path_all} a.ent-name::attr(href)").getall()
+
         if  evo_splits > 0:
-            numbers = response.css(f"{path_all} small:first-child::text").getall()
-            names = response.css(f"{path_all} a.ent-name::text").getall()
-            urls = response.css(f"{path_all} a.ent-name::attr(href)").getall()
-
-
+            pass
         else:
             numbers = response.css(f"{path_all} small:first-child::text").getall()
             names = response.css(f"{path_all} a.ent-name::text").getall()
